@@ -16,27 +16,31 @@ public class Six {
         System.out.println("10. " + palindromedescendant(13001120));
     }
 
-    //Число Белла - это количество способов, которыми массив из n элементов может
+    //1. Число Белла - это количество способов, которыми массив из n элементов может
     //быть разбит на непустые подмножества
     //принимает число n и возвращает соответствующее число Белла
+    //bell(2) ➞ 2
+    //// sampleArr = [1, 2]
+    //// possiblePartitions = [[[1, 2]], [[1], [2]]]
     public static int bell(int n) {
-        int[][] bellTriangle = new int[n+1][n+1];
-        bellTriangle[0][0] = 1;
+        int[][] bell = new int[n+1][n+1];
+        bell[0][0] = 1;
 
         for (int i=1; i<=n; i++) {
-            bellTriangle[i][0] = bellTriangle[i-1][i-1];
+            bell[i][0] = bell[i-1][i-1];
 
             for (int j=1; j<=i; j++) {
-                bellTriangle[i][j] = bellTriangle[i-1][j-1] + bellTriangle[i][j-1];
+                bell[i][j] = bell[i-1][j-1] + bell[i][j-1];
             }
         }
 
-        return bellTriangle[n][0];
+        return bell[n][0];
     }
 
-    //Первая функция translateWord (word) получает слово на английском и возвращает это
+    //2. Первая функция translateWord (word) получает слово на английском и возвращает это
     //слово, переведенное на латинский язык. Вторая функция translateSentence (предложение)
     //берет английское предложение и возвращает это предложение, переведенное на латинский язык.
+    //have ➞ avehay, ate ➞ ateyay
     public static String translateWord(String word) {
         String result = word;
 
@@ -51,6 +55,7 @@ public class Six {
 
         return result;
     }
+
 
     public static String translateSentence(String str) {
         String[] tokens = str.split(" ");
@@ -97,7 +102,7 @@ public class Six {
         return String.join(" ", tokens);
     }
 
-    //принимает строку
+    //3. принимает строку
     //(например, " rgb(0, 0, 0)") и возвращает true, если ее формат правильный, в
     //противном случае возвращает false
     public static boolean validColor(String str) {
@@ -105,41 +110,41 @@ public class Six {
             return false;
         }
 
-        String[] numbers = str.split("\\(")[1].split(",");
-        numbers[numbers.length - 1] = numbers[numbers.length - 1].substring(0, numbers[numbers.length - 1].length() - 1);
+        String[] n = str.split("\\(")[1].split(",");
+        n[n.length - 1] = n[n.length - 1].substring(0, n[n.length - 1].length() - 1);
 
         if (str.startsWith("rgb") && !str.startsWith("rgba")) {
             if (str.contains(".")) {
                 return false;
             }
 
-            for (int i = 0; i < numbers.length; i ++) {
-                if (numbers[i].trim().equals("")) {
+            for (int i = 0; i < n.length; i ++) {
+                if (n[i].trim().equals("")) {
                     return false;
                 }
 
-                int num = Integer.parseInt(numbers[i].trim());
+                int num = Integer.parseInt(n[i].trim());
 
                 if (!(num >= 0 && num <= 255)) {
                     return false;
                 }
             }
         } else {
-            for (int i = 0; i < numbers.length - 1; i ++) {
-                if (numbers[i].trim().equals("")) {
+            for (int i = 0; i < n.length - 1; i ++) {
+                if (n[i].trim().equals("")) {
                     return false;
                 }
 
-                int num = Integer.parseInt(numbers[i].trim());
+                int num = Integer.parseInt(n[i].trim());
 
                 if (!(num >= 0 && num <= 255)) {
                     return false;
                 }
             }
 
-            if (numbers[3].trim().equals("")) return false;
+            if (n[3].trim().equals("")) return false;
 
-            double num = Double.parseDouble(numbers[3].trim());
+            double num = Double.parseDouble(n[3].trim());
 
             return num >= 0 && num <= 1;
         }
@@ -147,7 +152,7 @@ public class Six {
         return true;
     }
 
-    //принимает URL (строку), удаляет дублирующиеся
+    //4. принимает URL (строку), удаляет дублирующиеся
     //параметры запроса и параметры, указанные во втором аргументе (который будет
     //необязательным массивом)
     public static String stripUrlParams(String url, String ...paramsToStrip) {
